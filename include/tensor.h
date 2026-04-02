@@ -18,4 +18,6 @@ public:
 	void print() const;
 };
 
-
+Tensor add(const Tensor& a, const Tensor& b);
+Tensor mul(const Tensor& a, const Tensor& b);
+Tensor matmul(const Tensor& a, const Tensor& b);
