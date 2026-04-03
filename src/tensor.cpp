@@ -200,3 +200,26 @@ TensorPtr matmul(const TensorPtr& a, const TensorPtr& b) {
 
 	return out;
 }
+
+TensorPtr sum(const TensorPtr& a) {
+	float total = 0.0f;
+	for (float v : a->data)
+	{
+		total += v;
+	}
+
+	TensorPtr out = tensor({ total }, { 1 }, a->requires_grad);
+	out->parents = { a };
+
+	out->backward_fn = [a, out]() {
+		if (a->requires_grad)
+		{
+			for (size_t i = 0; i < a->grad.size(); i++)
+			{
+				a->grad[i] += out->grad[0];
+			}
+		}
+	};
+
+	return out;
+}

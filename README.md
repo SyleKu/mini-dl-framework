@@ -35,8 +35,8 @@ Core components:
 ## Roadmap
 
 - [X] Project setup
-- [ ] Basic tensor operations
-- [ ] Autograd engine
+- [X] Basic tensor operations
+- [X] Autograd engine
 - [ ] Linear layers
 - [ ] Activation functions
 - [ ] Loss functions
