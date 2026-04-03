@@ -9,15 +9,26 @@ This project aims to re-implement core components from first principles to gain 
 
 ---
 
-## Features (Planned)
+## Implemented Features
 
-- Tensor class with basic operations
-- Reverse-mode autodiff (computational graph)
-- Neural network layers (Linear, ReLU, etc.)
-- Loss functions (MSE, CrossEntropy)
+- Tensor class with basic operations (`add`, `mul`, `matmul`, `sum`)
+- Reverse-mode autodiff with dynamic computation graph
+- Backward propagation for element-wise ops and matrix multiplication
+- Linear layer
+- ReLU activation
+- Mean squared error (MSE) loss
+- Initial gradient and autograd tests
+
+---
+
+## Planned Features
+
 - Optimizers (SGD, Adam)
-- Training demos (XOR, MNIST)
-- Optional SIMD optimizations for matrix operations
+- Sequential model API
+- XOR training demo
+- MNIST training
+- SIMD-optimized matrix operations
+- Additional loss funcions (e.g. CrossEntropy)
 
 ---
 
@@ -25,10 +36,11 @@ This project aims to re-implement core components from first principles to gain 
 
 Core components:
 
-- Tensor: data + gradient tracking
-- Autograd Engine: dynamic computation graph
-- Modules: neural network layers
-- Optimizers: parameter updates
+- **Tensor**: stores data, gradients, shape, and graph connectivity
+- **Autograd Engine**: reverse-mode autodiff over a dynamic computation graph
+- **Operations**: add, mul, matmul, sum, relu
+- **Modules**: trainable layers such as `Linear`
+- **Losses**: scalar objectives such as mean squared error
 
 ---
 
@@ -39,12 +51,28 @@ Core components:
 - [X] Initial autograd engine
 - [X] Sum reduction and gradient checks
 - [X] Matmul backward propagation
-- [ ] Linear layers
-- [ ] Activation functions
-- [ ] Loss functions
+- [X] Linear layers
+- [X] Activation functions
+- [X] Loss functions
 - [ ] Optimizers
 - [ ] XOR training demos
 - [ ] MNIST training
+
+---
+
+## Current Status
+
+The framework currently supports:
+- scalar and tensor-based forward computation
+- reverse-mode automatic differentiation
+- gradient propagation through `add`, `mul`, `sum`, and `matmul`
+- simple trainable layers and loss evaluation
+
+Initial tests have been added for:
+- tensor operations
+- scalar autograd correctness
+- gradient checks
+- matrix multiplication backward propagation
 
 ---
 

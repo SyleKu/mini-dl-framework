@@ -1,12 +1,14 @@
 #pragma once
+
 #include <vector>
 #include <memory>
 
 class Tensor;
+using TensorPtr = std::shared_ptr<Tensor>;
 
 class Module {
 public:
-	virtual Tensor forward(const Tensor& x) = 0;
-	virtual std::vector<Tensor*> parameters() = 0;
-	virtual ~Module() * default;
+	virtual TensorPtr forward(const TensorPtr& x) = 0;
+	virtual std::vector<TensorPtr> parameters() = 0;
+	virtual ~Module() = default;
 };
