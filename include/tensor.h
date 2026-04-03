@@ -1,23 +1,47 @@
 #pragma once
+
 #include <vector>
-#include <functional>
 #include <memory>
+#include <functional>
+#include <iostream>
+#include <unordered_set>
+#include <algorithm>
+
+class Tensor;
+using TensorPtr = std::shared_ptr<Tensor>;
 
 class Tensor {
 public:
 	std::vector<float> data;
 	std::vector<float> grad;
 	std::vector<int> shape;
-	bool requires_grad = false;
+	bool requires_grad;
+
+	std::vector<TensorPtr> parents;
+	std::function<void()> backward_fn;
 
 	Tensor();
-	Tensor(const std::vector<float>& data, const std::vector<int>& shape, bool requires_grad = false);
+	Tensor(
+		const std::vector<float>& data, 
+		const std::vector<int>& shape, 
+		bool requires_grad = false
+	);
 
 	void zero_grad();
-	void backward();
 	void print() const;
+	void backward();
+
+private:
+	void build_topo(std::vector<Tensor*>& topo, std::unordered_set<Tensor*>& visited);
 };
 
-Tensor add(const Tensor& a, const Tensor& b);
-Tensor mul(const Tensor& a, const Tensor& b);
-Tensor matmul(const Tensor& a, const Tensor& b);
+TensorPtr tensor(
+	const std::vector<float>& data,
+	const std::vector<int>& shape,
+	bool required_grad = false
+);
+
+TensorPtr add(const TensorPtr& a, const TensorPtr& b);
+TensorPtr mul(const TensorPtr& a, const TensorPtr& b);
+TensorPtr matmul(const TensorPtr& a, const TensorPtr& b);
+TensorPtr sum(const TensorPtr& a);
