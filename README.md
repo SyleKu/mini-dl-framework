@@ -14,10 +14,11 @@ This project aims to re-implement core components from first principles to gain 
 - Tensor class with basic operations (`add`, `mul`, `matmul`, `sum`)
 - Reverse-mode autodiff with dynamic computation graph
 - Backward propagation for element-wise ops and matrix multiplication
-- Linear layer
-- ReLU activation
-- Mean squared error (MSE) loss
-- Initial gradient and autograd tests
+- Trainable `Linear` layer
+- `ReLU` activation
+- Mean squared error (`MSE`) loss
+- Stochastic gradient descent (`SGD`) optimizer
+- Initial XOR training example
 
 ---
 
@@ -39,8 +40,9 @@ Core components:
 - **Tensor**: stores data, gradients, shape, and graph connectivity
 - **Autograd Engine**: reverse-mode autodiff over a dynamic computation graph
 - **Operations**: add, mul, matmul, sum, relu
-- **Modules**: trainable layers such as `Linear`
-- **Losses**: scalar objectives such as mean squared error
+- **Modules**: trainable layers such as `Linear` and model composition via `Sequential`
+- **Losses**: scalar objectives such as MSE
+- **Optimizers**: parameter updates via SGD
 
 ---
 
@@ -54,8 +56,8 @@ Core components:
 - [X] Linear layers
 - [X] Activation functions
 - [X] Loss functions
-- [ ] Optimizers
-- [ ] XOR training demos
+- [X] Optimizers
+- [X] XOR training demos
 - [ ] MNIST training
 
 ---
@@ -67,6 +69,8 @@ The framework currently supports:
 - reverse-mode automatic differentiation
 - gradient propagation through `add`, `mul`, `sum`, and `matmul`
 - simple trainable layers and loss evaluation
+- simple optimization with SGD
+- an initial XOR learning demo
 
 Initial tests have been added for:
 - tensor operations
