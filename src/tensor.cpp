@@ -191,12 +191,42 @@ TensorPtr matmul(const TensorPtr& a, const TensorPtr& b) {
 		}
 	}
 
-
 	bool req_guard = a->requires_grad || b->requires_grad;
 	TensorPtr out = tensor(result, {m, p}, req_guard);
 
 	out->parents = {a, b};
-	out->backward_fn = []() {};
+
+	out->backward_fn = [a, b, out, m, n, p]() {
+		if (a->requires_grad)
+		{
+			for (int i = 0; i < m; i++) {
+				for (int k = 0; k < n; k++)
+				{
+					float grad_val = 0.0f;
+					for (int j = 0; j < p; j++)
+					{
+						grad_val += out->grad[i * p + j] * b->data[k * p + j];
+					}
+					a->grad[i * n + k] += grad_val;
+				}
+			}
+		}
+
+		if (b->requires_grad)
+		{
+			for (int k = 0; k < n; k++)
+			{
+				for (int j = 0; j < p; j++) {
+					float grad_val = 0.0f;
+					for (int i = 0; i < m; i++)
+					{
+						grad_val += a->data[i * n + k] * out->grad[i * p + j];
+					}
+					b->grad[k * p + j] += grad_val;
+				}
+			}
+		}
+	};
 
 	return out;
 }

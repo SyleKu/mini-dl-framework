@@ -27,3 +27,6 @@ target_link_libraries(test_autograd minidl)
 
 add_executable(test_gradient_check tests/test_gradient_check.cpp)
 target_link_libraries(test_gradient_check minidl)
+
+add_executable(test_matmul_autograd tests/test_matmul_autograd.cpp)
+target_link_libraries(test_matmul_autograd minidl)

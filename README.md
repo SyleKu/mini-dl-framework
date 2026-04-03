@@ -36,7 +36,9 @@ Core components:
 
 - [X] Project setup
 - [X] Basic tensor operations
-- [X] Autograd engine
+- [X] Initial autograd engine
+- [X] Sum reduction and gradient checks
+- [X] Matmul backward propagation
 - [ ] Linear layers
 - [ ] Activation functions
 - [ ] Loss functions
