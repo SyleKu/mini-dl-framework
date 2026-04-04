@@ -55,3 +55,6 @@ set_target_properties(test_mnist_loader PROPERTIES
 
 add_executable(test_utils tests/test_utils.cpp)
 target_link_libraries(test_utils minidl)
+
+add_executable(test_softmax_cross_entropy tests/test_softmax_cross_entropy.cpp)
+target_link_libraries(test_softmax_cross_entropy minidl)

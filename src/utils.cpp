@@ -1,5 +1,8 @@
 #include "utils.h"
 #include <stdexcept>
+#include <random>
+#include <algorithm>
+
 
 std::vector<float> one_hot_encode(int label, int num_classes) {
 	if (label < 0 || label >= num_classes)
@@ -31,4 +34,18 @@ int argmax(const std::vector<float>& values) {
 		}
 	}
 	return best_index;
+}
+
+std::vector<size_t> shuffled_indices(size_t n) {
+	std::vector<size_t> indices(n);
+	for (size_t i = 0; i < n; i++)
+	{
+		indices[i] = i;
+	}
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::shuffle(indices.begin(), indices.end(), gen);
+
+	return indices;
 }
