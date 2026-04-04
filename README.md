@@ -8,6 +8,26 @@ This project aims to re-implement core components from first principles to gain 
 - performance considerations in numerical computing
 
 ---
+## Results
+
+### XOR Training
+
+A two-layer MLP was trained on the XOR problem.
+
+Final prediction after training:
+
+- `0 xor 0 -> 0.0023`
+- `0 xor 1 -> 0.9995`
+- `1 xor 0 -> 0.9995`
+- `1 xor 1 -> 0.0006`
+
+![XOR Training](assets/xor_training.png)
+
+
+This demonstrates that the framework supports forward computation, gradient proagation,
+parameter updates, and successful learning of a non-linearly separable problem.
+
+---
 
 ## Implemented Features
 
@@ -18,7 +38,7 @@ This project aims to re-implement core components from first principles to gain 
 - `ReLU` activation
 - Mean squared error (`MSE`) loss
 - Stochastic gradient descent (`SGD`) optimizer
-- Initial XOR training example
+- End-to-end XOR training demo
 
 ---
 

@@ -7,8 +7,8 @@
 #include <vector>
 
 int main() {
-	auto layer1 = std::make_shared<Linear>(2, 4);
-	auto layer2 = std::make_shared<Linear>(4, 1);
+	auto layer1 = std::make_shared<Linear>(2, 8);
+	auto layer2 = std::make_shared<Linear>(8, 1);
 
 	std::vector<TensorPtr> params;
 	auto p1 = layer1->parameters();
@@ -16,7 +16,7 @@ int main() {
 	params.insert(params.end(), p1.begin(), p1.end());
 	params.insert(params.end(), p2.begin(), p2.end());
 
-	SGD optimizer(params, 0.1f);
+	SGD optimizer(params, 0.01f);
 
 	std::vector<TensorPtr> inputs = {
 		tensor({0.0f, 0.0f}, {1, 2}, false),
@@ -32,7 +32,7 @@ int main() {
 		tensor({0.0f}, {1, 1}, false)
 	};
 
-	for (int epoch = 0; epoch < 200; epoch++)
+	for (int epoch = 0; epoch < 1000; epoch++)
 	{
 		float total_loss = 0.0f;
 
