@@ -16,10 +16,10 @@ A two-layer MLP was trained on the XOR problem.
 
 Final prediction after training:
 
-- `0 xor 0 -> 0.0023`
-- `0 xor 1 -> 0.9995`
-- `1 xor 0 -> 0.9995`
-- `1 xor 1 -> 0.0006`
+- `0 xor 0 -> 0.0068`
+- `0 xor 1 -> 0.9884`
+- `1 xor 0 -> 0.9898`
+- `1 xor 1 -> 0.0123`
 
 ![XOR Training](assets/xor_training.png)
 
@@ -35,10 +35,10 @@ parameter updates, and successful learning of a non-linearly separable problem.
 - Reverse-mode autodiff with dynamic computation graph
 - Backward propagation for element-wise ops and matrix multiplication
 - Trainable `Linear` layer
-- `ReLU` activation
+- Actiovation functions: `ReLU`, `Sigmoid` ,`Tanh`
 - Mean squared error (`MSE`) loss
 - Stochastic gradient descent (`SGD`) optimizer
-- End-to-end XOR training demo
+- End-to-end XOR training demo (non-linear learning)
 
 ---
 
@@ -59,7 +59,7 @@ Core components:
 
 - **Tensor**: stores data, gradients, shape, and graph connectivity
 - **Autograd Engine**: reverse-mode autodiff over a dynamic computation graph
-- **Operations**: add, mul, matmul, sum, relu
+- **Operations**: add, mul, matmul, sum, activations
 - **Modules**: trainable layers such as `Linear` and model composition via `Sequential`
 - **Losses**: scalar objectives such as MSE
 - **Optimizers**: parameter updates via SGD
@@ -78,7 +78,9 @@ Core components:
 - [X] Loss functions
 - [X] Optimizers
 - [X] XOR training demos
+- [ ] MNIST data loading
 - [ ] MNIST training
+- [ ] SIMD optimizations
 
 ---
 
@@ -114,3 +116,11 @@ internal mechanics of deep learning systems.
 - Model serialization
 - Performance benchmarking
 
+
+---
+
+## Motivation
+
+This porject was developed to gain a deeper understanding of how deep learning
+frameworks work internally, including gradient propagation, computational graphs,
+and training dynamics.

@@ -32,7 +32,7 @@ int main() {
 		tensor({0.0f}, {1, 1}, false)
 	};
 
-	for (int epoch = 0; epoch < 1000; epoch++)
+	for (int epoch = 0; epoch < 100000; epoch++)
 	{
 		float total_loss = 0.0f;
 
@@ -41,8 +41,9 @@ int main() {
 			optimizer.zero_grad();
 
 			auto h1 = layer1->forward(inputs[i]);
-			auto a1 = relu(h1);
-			auto pred = layer2->forward(a1);
+			auto a1 = tanh_act(h1);
+			auto out = layer2->forward(a1);
+			auto pred = sigmoid(out);
 
 			auto loss = mse_loss(pred, targets[i]);
 			total_loss += loss->data[0];
@@ -63,8 +64,9 @@ int main() {
 	for (size_t i = 0; i < inputs.size(); i++)
 	{
 		auto h1 = layer1->forward(inputs[i]);
-		auto a1 = relu(h1);
-		auto pred = layer2->forward(a1);
+		auto a1 = tanh_act(h1);
+		auto out = layer2->forward(a1);
+		auto pred = sigmoid(out);
 
 		std::cout << inputs[i]->data[0] << " xor " << inputs[i]->data[1]
 			<< " -> " << pred->data[0] << std::endl;
