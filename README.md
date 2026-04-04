@@ -39,18 +39,18 @@ parameter updates, and successful learning of a non-linearly separable problem.
 - Loss functions: Mean squared error (`MSE`), Binary Cross Entropy Loss (`BCE`)
 - Stochastic gradient descent (`SGD`) optimizer
 - End-to-end XOR training demo (non-linear learning)
-- Initial MNIST IDX data loader
+- IDX-based MNIST data loader
+- Initial MLP prototype for MNIST classificaiton
 
 ---
 
 ## Planned Features
 
-- Optimizers (SGD, Adam)
-- Sequential model API
-- XOR training demo
+- Softmax activation
+- CrossEntropy loss
+- Improved evaluation pipeline
 - MNIST training
 - SIMD-optimized matrix operations
-- Additional loss funcions (e.g. CrossEntropy)
 
 ---
 
@@ -80,7 +80,8 @@ Core components:
 - [X] Optimizers
 - [X] XOR training demos
 - [X] MNIST data loading
-- [ ] MNIST training
+- [X] MNIST MLP prototype
+- [ ] Softmax ( CrossEntropy
 - [ ] SIMD optimizations
 
 ---

@@ -15,10 +15,14 @@ add_library(minidl
 	src/losses.cpp
 	src/optimizer.cpp
 	src/mnist.cpp
+	src/utils.cpp
 )
 
 add_executable(xor_example examples/xor.cpp)
 target_link_libraries(xor_example minidl)
+
+add_executable(mnist_mlp examples/mnist_mlp.cpp)
+target_link_libraries(mnist_mlp minidl)
 
 add_executable(test_tensor tests/test_tensor.cpp)
 target_link_libraries(test_tensor minidl)
@@ -40,3 +44,6 @@ target_link_libraries(test_bce_loss minidl)
 
 add_executable(test_mnist_loader tests/test_mnist_loader.cpp)
 target_link_libraries(test_mnist_loader minidl)
+
+add_executable(test_utils tests/test_utils.cpp)
+target_link_libraries(test_utils minidl)
