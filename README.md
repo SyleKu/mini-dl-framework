@@ -1,128 +1,193 @@
 # mini-dl-framework
-Modern deep learning frameworks such as PyTorch abstract away many important implementation details.
-This project aims to re-implement core components from first principles to gain a deeper understanding of:
 
-- tensor abstractions
-- reverse-mode automatic differentiation
-- neural network training pipelines
-- performance considerations in numerical computing
+A minimal deep learning framework implemented from scratch in modern C++.
 
----
-## Results
-
-### XOR Training
-
-A two-layer MLP was trained on the XOR problem.
-
-Final prediction after training:
-
-- `0 xor 0 -> 0.0068`
-- `0 xor 1 -> 0.9884`
-- `1 xor 0 -> 0.9898`
-- `1 xor 1 -> 0.0123`
-
-![XOR Training](assets/xor_training.png)
-
-
-This demonstrates that the framework supports forward computation, gradient proagation,
-parameter updates, and successful learning of a non-linearly separable problem.
+This project was developed to gain a deep understanding of:
+- automatic differentiation (reverse-mode autograd)
+- neural network training
+- tensor operations and computational graphs
+- low-level system design for ML frameworks
 
 ---
 
-## Implemented Features
+## Features
 
-- Tensor class with basic operations (`add`, `mul`, `matmul`, `sum`)
-- Reverse-mode autodiff with dynamic computation graph
-- Backward propagation for element-wise ops and matrix multiplication
-- Trainable `Linear` layer
-- Actiovation functions: `ReLU`, `Sigmoid` ,`Tanh`
-- Loss functions: Mean squared error (`MSE`), Binary Cross Entropy Loss (`BCE`)
-- Stochastic gradient descent (`SGD`) optimizer
-- End-to-end XOR training demo (non-linear learning)
-- IDX-based MNIST data loader
-- Initial MLP prototype for MNIST classificaiton
-
----
-
-## Planned Features
-
-- Softmax activation
-- CrossEntropy loss
-- Improved evaluation pipeline
-- MNIST training
-- SIMD-optimized matrix operations
+- Custom **Tensor** implementation
+- Reverse-mode **Autograd Engine**
+- Core tesnor ops: `add`, `mul`, `matmul`, `sum`
+- Neural network layers:
+	- `Linear`
+- Activation functions:
+	- ReLU, Sigmoid, Tanh, Softmax
+- Loss funcions:
+	- MSE, Binary Cross Entropy, Cross Entropy
+- Optimizer:
+	- SGD
+- Training pipelines:
+	- XOR (sanity check)
+	- MNIST (multi-class classification)
 
 ---
 
 ## Architecture
 
-Core components:
+The framework is designed with a clear separation of concerns:
 
-- **Tensor**: stores values, gradients, shape, and graph connectivity
-- **Autograd Engine**: reverse-mode autodiff over a dynamic computation graph
-- **Operations**: add, mul, matmul, sum, activations
-- **Modules**: trainable layers such as `Linear` and model composition via `Sequential`
-- **Losses**: MSE, CrossEntropy
-- **Optimizers**: parameter updates via SGD
+- **Tensor**
+	- stores data, gradients, and graph connections
+- **Autograd Engine**
+	- builds computation graph
+	- performs reverse-mode differentiation
+- **Operations**
+	- define forward pass and local backward functions
+- **Modules**
+	- abstraction for neural network layers
+- **Optimizer**
+	- updates parameters via gradient descent
 
----
-
-## Roadmap
-
-- [X] Project setup
-- [X] Basic tensor operations
-- [X] Initial autograd engine
-- [X] Sum reduction and gradient checks
-- [X] Matmul backward propagation
-- [X] Linear layers
-- [X] Activation functions
-- [X] Loss functions
-- [X] Optimizers
-- [X] XOR training demos
-- [X] MNIST data loading
-- [X] MNIST MLP prototype
-- [X] Softmax / CrossEntropy
-- [ ] SIMD optimizations
+This mirrors the design principles of modern frameworks like PyTorch, but in a minimal and educational form.
 
 ---
 
-## Current Status
+## Results
 
-The framework currently supports:
-- scalar and tensor-based forward computation
-- reverse-mode automatic differentiation
-- gradient propagation through `add`, `mul`, `sum`, and `matmul`
-- simple trainable layers and loss evaluation
-- simple optimization with SGD
-- an initial XOR learning demo
+### XOR (Sanity Check)
 
-Initial tests have been added for:
-- tensor operations
-- scalar autograd correctness
-- gradient checks
-- matrix multiplication backward propagation
+Simple feedforward network trained to learn XOR:
 
----
+- `0 xor 0 -> 0.00016`
+- `0 xor 1 -> 0.99961`
+- `1 xor 0 -> 0.99955`
+- `1 xor 1 -> 0.00049`
 
-## Goals
+![XOR Training](assets/xor_training.png)
 
-The goal is not to compete with production frameworks, but to build a minimal, well-structured system that exposes the 
-internal mechanics of deep learning systems.
+Successfully learns non-linear boundary
 
 ---
 
-## Future Work
+### MNIST (Handwritten Digit Classification)
 
-- SIMD acceleration (AVX)
-- Convolution layers
-- Model serialization
-- Performance benchmarking
+Model:
+- Input: 784 (28x28)
+- Architecture: 784 -> 128 -> 64 -> 10
+- Activation: ReLU
+- Output: Softmax
+- Loss: Cross Entropy
+- Optimizer: SGD
 
+
+training on 1000 samples:
+
+```
+Epoch 0 | loss = 1.67614 | accuracy = 60.3%
+Epoch 1 | loss = 0.462179 | accuracy = 84.1%
+Epoch 2 | loss = 0.235046 | accuracy = 92.4%
+Epoch 3 | loss = 0.114682 | accuracy = 96.1%
+Epoch 4 | loss = 0.0428207 | accuracy = 99.1%
+```
+
+Sample predictions:
+```
+Sample 0 | predicated = 5 | actual = 5
+Sample 1 | predicated = 0 | actual = 0
+Sample 2 | predicated = 4 | actual = 4
+Sample 3 | predicated = 1 | actual = 1
+Sample 4 | predicated = 9 | actual = 9
+```
+
+Demonstrates correct gradient flow and learning capability
+Confirms stability of autograd + traing pipeline
 
 ---
 
-## Motivation
+## Build & Run
 
-This porject was developed to gain a deeper understanding of how deep learning
-frameworks work internally, including gradient propagation, computational graphs,
-and training dynamics.
+### Requirements
+- C++17
+- CMake ≥ 3.16
+- Visual Studio / GCC / Clang
+
+### Build
+
+```
+mkdir build
+cd build
+cmake ..
+cmake --build .
+
+```
+
+## Run examples
+
+```
+./xor_example
+./mnist_mlp
+
+```
+
+---
+
+## Project Structure
+
+```
+include/
+├── tensor.h
+├── autograd.h
+├── module.h
+├── linear.h
+├── activations.h
+├── losses.h
+├── optimizer.h
+├── mnist.h
+└── utils.h
+
+src/
+├── tensor.cpp
+├── autograd.cpp
+├── module.cpp
+├── linear.cpp
+├── activations.cpp
+├── losses.cpp
+├── optimizer.cpp
+├── mnist.cpp
+└── utils.cpp
+
+examples/
+├── xor.cpp
+└── mnist_mlp.cpp
+
+tests/
+├── test_activations.cpp
+├── test_autograd.cpp
+├── test_bce_loss.cpp
+├── test_gradient_check.cpp
+├── test_linear_training.cpp
+├── test_matmul_autograd.cpp
+├── test_mnist_loader.cpp
+├── test_softmax_cross_entropy.cpp
+├── test_tensor.cpp
+└── test_utils.cpp
+
+```
+
+---
+
+### Motivation
+
+The goal of this project is not performance, but **understanding**.
+
+By implementing all components manually:
+- the full backpropagation pipeline becomes transparent
+- tensor operations and gradients are no longer "black boxes"
+- architectural trade-offs become explicit
+
+---
+
+### Future Work
+- Mini-batch training
+- Better optimizers (Adam, RMSProp)
+- SIMD / vectorized operations
+- GPU acceleration
+- Convolutional layers
+- Dataset abstractions
