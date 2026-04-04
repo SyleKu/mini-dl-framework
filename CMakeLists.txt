@@ -23,6 +23,10 @@ target_link_libraries(xor_example minidl)
 
 add_executable(mnist_mlp examples/mnist_mlp.cpp)
 target_link_libraries(mnist_mlp minidl)
+target_compile_definitions(mnist_mlp PRIVATE MINI_DL_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+set_target_properties(mnist_mlp PROPERTIES 
+	VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
 
 add_executable(test_tensor tests/test_tensor.cpp)
 target_link_libraries(test_tensor minidl)
@@ -44,6 +48,10 @@ target_link_libraries(test_bce_loss minidl)
 
 add_executable(test_mnist_loader tests/test_mnist_loader.cpp)
 target_link_libraries(test_mnist_loader minidl)
+target_compile_definitions(test_mnist_loader PRIVATE MINI_DL_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+set_target_properties(test_mnist_loader PROPERTIES 
+	VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
 
 add_executable(test_utils tests/test_utils.cpp)
 target_link_libraries(test_utils minidl)

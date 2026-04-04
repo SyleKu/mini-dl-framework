@@ -23,12 +23,12 @@ MNISTData load_mnist_images_and_labels(const std::string& images_path,
 
 	if (!images_file.is_open())
 	{
-		throw std::runtime_error("Could not open MNIST images file");
+		throw std::runtime_error("Could not open MNIST images file: " + images_path);
 	}
 
 	if (!labels_file.is_open())
 	{
-		throw std::runtime_error("Could not open MNIST labels file");
+		throw std::runtime_error("Could not open MNIST labels file: " + labels_path);
 	}
 
 	int image_magic = read_big_endian_int(images_file);

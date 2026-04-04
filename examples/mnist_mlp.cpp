@@ -9,12 +9,15 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <filesystem>
 
 int main() {
 	try {
+		std::filesystem::path project_root = MINI_DL_PROJECT_ROOT;
+
 		auto train_data = load_mnist_images_and_labels(
-			"data/train-images-idx3-ubyte",
-			"data/train-labels-idx1-ubyte",
+			(project_root / "data/train-images-idx3-ubyte").string(),
+			(project_root / "data/train-labels-idx1-ubyte").string(),
 			1000
 		);
 
@@ -84,8 +87,3 @@ int main() {
 		return 1;
 	}
 }
-
-
-
-
-

@@ -1,11 +1,14 @@
 #include "mnist.h"
 #include <iostream>
+#include <filesystem>
 
 int main() {
 	try {
+		std::filesystem::path project_root = MINI_DL_PROJECT_ROOT;
+
 		auto data = load_mnist_images_and_labels(
-			"data/train-images-idx3-ubyte",
-			"data/train-labels-idx1-ubyte",
+			(project_root / "data/train-images-idx3-ubyte").string(),
+			(project_root / "data/train-labels-idx1-ubyte").string(),
 			5
 		);
 
