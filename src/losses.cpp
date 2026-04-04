@@ -1,5 +1,7 @@
 #include "losses.h"
 #include <stdexcept>
+#include <cmath>
+#include <algorithm>
 
 TensorPtr mse_loss(const TensorPtr& prediciton, const TensorPtr& target) {
 	if (prediciton->shape != target->shape)
@@ -40,6 +42,45 @@ TensorPtr mse_loss(const TensorPtr& prediciton, const TensorPtr& target) {
 			for (size_t i = 0; i < target->data.size(); i++) {
 				float diff = prediciton->data[i] - target->data[i];
 				target->grad[i] -= scale * diff * out->grad[0];
+			}
+		}
+	};
+
+	return out;
+}
+
+TensorPtr binary_cross_entropy(const TensorPtr& prediciton, const TensorPtr& target) {
+	if (prediciton->shape != target->shape)
+	{
+		throw std::invalid_argument("binary_cross_entropy requires matching shapes");
+	}
+
+	const float eps = 1e-7f;
+	size_t n = prediciton->data.size();
+	float loss_value = 0.0f;
+
+	for (size_t i = 0; i < n; i++)
+	{
+		float p = std::clamp(prediciton->data[i], eps, 1.0f - eps);
+		float y = target->data[i];
+		loss_value += -(y * std::log(p) + (1.0f - y) * std::log(1.0f - p));
+	}
+
+	loss_value /= static_cast<float>(n);
+
+	bool req_grad = prediciton->requires_grad || target->requires_grad;
+	TensorPtr out = tensor({ loss_value }, {1}, req_grad);
+	out->parents = { prediciton, target };
+
+	out->backward_fn = [prediciton, target, out, n, eps]() {
+		if (prediciton->requires_grad)
+		{
+			for (size_t i = 0; i < prediciton->data.size(); i++) {
+				float p = std::clamp(prediciton->data[i], eps, 1.0f - eps);
+				float y = target->data[i];
+
+				float grad = (-y / p) + ((1.0f -y) / (1.0f - p));
+				prediciton->grad[i] += (grad / static_cast<float>(n)) * out->grad[0];
 			}
 		}
 	};

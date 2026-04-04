@@ -36,9 +36,10 @@ parameter updates, and successful learning of a non-linearly separable problem.
 - Backward propagation for element-wise ops and matrix multiplication
 - Trainable `Linear` layer
 - Actiovation functions: `ReLU`, `Sigmoid` ,`Tanh`
-- Mean squared error (`MSE`) loss
+- Loss functions: Mean squared error (`MSE`), Binary Cross Entropy Loss (`BCE`)
 - Stochastic gradient descent (`SGD`) optimizer
 - End-to-end XOR training demo (non-linear learning)
+- Initial MNIST IDX data loader
 
 ---
 
@@ -78,7 +79,7 @@ Core components:
 - [X] Loss functions
 - [X] Optimizers
 - [X] XOR training demos
-- [ ] MNIST data loading
+- [X] MNIST data loading
 - [ ] MNIST training
 - [ ] SIMD optimizations
 

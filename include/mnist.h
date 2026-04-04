@@ -9,4 +9,5 @@ struct MNISTData {
 };
 
 MNISTData load_mnist_images_and_labels(const std::string& images_path,
-										const std::string& labels_path);
+										const std::string& labels_path,
+										int max_sample = -1);

@@ -45,7 +45,7 @@ int main() {
 			auto out = layer2->forward(a1);
 			auto pred = sigmoid(out);
 
-			auto loss = mse_loss(pred, targets[i]);
+			auto loss = binary_cross_entropy(pred, targets[i]);
 			total_loss += loss->data[0];
 
 			loss->backward();

@@ -34,3 +34,9 @@ target_link_libraries(test_matmul_autograd minidl)
 
 add_executable(test_activations tests/test_activations.cpp)
 target_link_libraries(test_activations minidl)
+
+add_executable(test_bce_loss tests/test_bce_loss.cpp)
+target_link_libraries(test_bce_loss minidl)
+
+add_executable(test_mnist_loader tests/test_mnist_loader.cpp)
+target_link_libraries(test_mnist_loader minidl)
