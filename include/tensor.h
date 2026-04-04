@@ -4,18 +4,16 @@
 #include <memory>
 #include <functional>
 #include <iostream>
-#include <unordered_set>
-#include <algorithm>
 
 class Tensor;
 using TensorPtr = std::shared_ptr<Tensor>;
 
-class Tensor {
+class Tensor : public std::enable_shared_from_this<Tensor> {
 public:
 	std::vector<float> data;
 	std::vector<float> grad;
 	std::vector<int> shape;
-	bool requires_grad;
+	bool requires_grad = false;
 
 	std::vector<TensorPtr> parents;
 	std::function<void()> backward_fn;
@@ -30,9 +28,6 @@ public:
 	void zero_grad();
 	void print() const;
 	void backward();
-
-private:
-	void build_topo(std::vector<Tensor*>& topo, std::unordered_set<Tensor*>& visited);
 };
 
 TensorPtr tensor(

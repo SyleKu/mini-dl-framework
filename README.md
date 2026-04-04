@@ -58,11 +58,11 @@ parameter updates, and successful learning of a non-linearly separable problem.
 
 Core components:
 
-- **Tensor**: stores data, gradients, shape, and graph connectivity
+- **Tensor**: stores values, gradients, shape, and graph connectivity
 - **Autograd Engine**: reverse-mode autodiff over a dynamic computation graph
 - **Operations**: add, mul, matmul, sum, activations
 - **Modules**: trainable layers such as `Linear` and model composition via `Sequential`
-- **Losses**: scalar objectives such as MSE
+- **Losses**: MSE, CrossEntropy
 - **Optimizers**: parameter updates via SGD
 
 ---
@@ -81,7 +81,7 @@ Core components:
 - [X] XOR training demos
 - [X] MNIST data loading
 - [X] MNIST MLP prototype
-- [ ] Softmax ( CrossEntropy
+- [X] Softmax / CrossEntropy
 - [ ] SIMD optimizations
 
 ---

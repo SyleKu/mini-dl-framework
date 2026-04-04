@@ -1,4 +1,8 @@
 #include "tensor.h"
+#include "autograd.h"
+
+#include <stdexcept>
+#include <algorithm>
 #include <iostream>
 
 Tensor::Tensor() :requires_grad(false) {}
@@ -34,48 +38,14 @@ void Tensor::print() const {
 	std::cout << "])" << std::endl;
 }
 
+void Tensor::backward() {
+	run_backward(shared_from_this());
+}
+
 TensorPtr tensor(const std::vector<float>& data,
 					const std::vector<int>& shape,
 					bool requires_grad) {
 	return std::make_shared<Tensor>(data, shape, requires_grad);
-}
-
-void Tensor::build_topo(std::vector<Tensor*>& topo, std::unordered_set<Tensor*>& visited) {
-	if (visited.count(this))
-	{
-		return;
-	}
-
-	visited.insert(this);
-
-	for (const auto& parent : parents)
-	{
-		parent->build_topo(topo, visited);
-	}
-
-	topo.push_back(this);
-}
-
-void Tensor::backward() {
-	if (data.size() != 1)
-	{
-		throw std::runtime_error("backward() currently only supports scalar outputs");
-	}
-	
-	std::vector<Tensor*> topo;
-	std::unordered_set<Tensor*> visited;
-	build_topo(topo, visited);
-	
-	std::fill(grad.begin(), grad.end(), 0.0f);
-	grad[0] = 1.0f;
-
-	std::reverse(topo.begin(), topo.end());
-
-	for(Tensor* node : topo) {
-		if (node->backward_fn) {
-			node->backward_fn();
-		}
-	}
 }
 
 TensorPtr add(const TensorPtr& a, const TensorPtr& b) {
